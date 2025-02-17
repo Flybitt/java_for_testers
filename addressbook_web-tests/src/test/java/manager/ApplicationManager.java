@@ -18,12 +18,10 @@ public class ApplicationManager {
         if (driver == null) {
             if ("firefox".equals(browser)) {
                 driver = new FirefoxDriver();
-            } else if ("chrome".equals(browser))
-                driver = new ChromeDriver();
+            } else if ("chrome".equals(browser)) driver = new ChromeDriver();
             else {
                 throw new IllegalArgumentException(String.format("Unkown browser %s", browser));
             }
-            driver = new ChromeDriver();
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
             driver.get("http://localhost/addressbook/");
             driver.manage().window().setSize(new Dimension(1440, 1282));
@@ -31,7 +29,7 @@ public class ApplicationManager {
         }
     }
 
-    public LoginHelper session(){
+    public LoginHelper session() {
         if (session == null) {
             session = new LoginHelper(this);
         }
