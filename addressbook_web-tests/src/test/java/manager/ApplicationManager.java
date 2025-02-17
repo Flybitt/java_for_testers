@@ -1,18 +1,14 @@
-import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class TestBase {
+public class ApplicationManager {
     protected static WebDriver driver;
 
-    protected static void removeGroup() {
-        driver.findElement(By.name("selected[]")).click();
-        driver.findElement(By.name("delete")).click();
-        driver.findElement(By.linkText("group page")).click();
-    }
-
-    @BeforeEach
-    public void setUp() {
+    void init() {
         if (driver == null) {
             driver = new ChromeDriver();
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
@@ -54,5 +50,11 @@ public class TestBase {
 
     protected boolean isGroupPresent() {
         return isElementPresent(By.name("selected[]"));
+    }
+
+    protected void removeGroup() {
+        driver.findElement(By.name("selected[]")).click();
+        driver.findElement(By.name("delete")).click();
+        driver.findElement(By.linkText("group page")).click();
     }
 }
