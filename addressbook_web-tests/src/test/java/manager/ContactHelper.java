@@ -11,7 +11,7 @@ public class ContactHelper extends HelperBase {
 
     public void createContact(ContactData contact) {
         openContactPage();
-        fillContact();
+        fillContact(contact);
         submitContactCreation();
         openHomePage();
     }
@@ -24,11 +24,11 @@ public class ContactHelper extends HelperBase {
         click(By.name("submit"));
     }
 
-    private void fillContact() {
-        type(By.name("firstname"), "firstname");
-        type(By.name("middlename"), "middlename");
-        type(By.name("lastname"), "lastname");
-        type(By.name("nickname"), "nickname");
+    private void fillContact(ContactData contact) {
+        type(By.name("firstname"), contact.firstName());
+        type(By.name("middlename"), contact.middleName());
+        type(By.name("lastname"), contact.lastName());
+        type(By.name("nickname"), contact.nickName());
     }
 
     private void openContactPage() {
@@ -52,5 +52,23 @@ public class ContactHelper extends HelperBase {
 
     private void selectContact() {
         click(By.name("selected[]"));
+    }
+
+    public int getCount() {
+        openHomePage();
+        return manager.driver.findElements(By.name("selected[]")).size();
+    }
+
+    public void remmoveAllContacts() {
+        openHomePage();
+        selectAllContacts();
+        removeSelectedContact();
+    }
+
+    private void selectAllContacts() {
+        var checkboxes = manager.driver.findElements(By.name("selected[]"));
+        for (var checkbox : checkboxes) {
+            checkbox.click();
+        }
     }
 }
