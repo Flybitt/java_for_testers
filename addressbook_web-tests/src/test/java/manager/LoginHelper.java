@@ -1,7 +1,6 @@
 package manager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 
 public class LoginHelper extends HelperBase {
 
