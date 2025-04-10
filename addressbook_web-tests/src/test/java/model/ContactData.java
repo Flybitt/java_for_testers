@@ -1,16 +1,25 @@
 package model;
 
-public record ContactData(String firstName, String middleName, String lastName, String nickName) {
+import org.checkerframework.checker.units.qual.C;
+
+public record ContactData(
+        String id,
+        String firstName,
+        String lastName) {
 
     public ContactData() {
-        this("", "", "", "");
+        this("", "", "");
+    }
+    public ContactData withId(String id) {
+        return new ContactData(id, this.firstName, this.lastName);
     }
 
-    public ContactData withFirstNameOnly(String firstName) {
-        return new ContactData(firstName, this.middleName, this.lastName, this.nickName);
+    public ContactData withFirstName(String firstName) {
+        return new ContactData(this.id, firstName, this.lastName);
     }
 
-    public ContactData withFullName(String firstName, String middleName, String lastName, String nickName) {
-        return new ContactData(firstName, middleName, lastName, nickName);
+    public ContactData withLastName(String lastName) {
+        return new ContactData(this.id, this.firstName, this.lastName);
     }
+
 }

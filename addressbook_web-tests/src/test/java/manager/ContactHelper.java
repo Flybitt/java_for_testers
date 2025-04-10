@@ -2,6 +2,10 @@ package manager;
 
 import model.ContactData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -13,11 +17,16 @@ public class ContactHelper extends HelperBase {
         openContactPage();
         fillContact(contact);
         submitContactCreation();
-        openHomePage();
+        clickTitle();
     }
 
+    // почему-то иногда не срабатывает и вылетает на stale element reference: stale element not found
     private void openHomePage() {
         manager.driver.findElement(By.xpath("//a[contains(text(), 'home')]")).click();
+    }
+
+    private void clickTitle() {
+        click(By.linkText("home page"));
     }
 
     private void submitContactCreation() {
@@ -26,9 +35,7 @@ public class ContactHelper extends HelperBase {
 
     private void fillContact(ContactData contact) {
         type(By.name("firstname"), contact.firstName());
-        type(By.name("middlename"), contact.middleName());
         type(By.name("lastname"), contact.lastName());
-        type(By.name("nickname"), contact.nickName());
     }
 
     private void openContactPage() {
@@ -40,9 +47,9 @@ public class ContactHelper extends HelperBase {
         return manager.isElementPresent(By.name("selected[]"));
     }
 
-    public void removeContact() {
+    public void removeContact(ContactData contact) {
         openHomePage();
-        selectContact();
+        selectContact(contact);
         removeSelectedContact();
     }
 
@@ -50,8 +57,8 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//*[@value=\"Delete\"]"));
     }
 
-    private void selectContact() {
-        click(By.name("selected[]"));
+    private void selectContact(ContactData contact) {
+        click(By.cssSelector(String.format("input[value='%s']", contact.id())));
     }
 
     public int getCount() {
@@ -70,5 +77,28 @@ public class ContactHelper extends HelperBase {
         for (var checkbox : checkboxes) {
             checkbox.click();
         }
+    }
+
+    public List<ContactData> getList() {
+        openHomePage();
+        var contacts = new ArrayList<ContactData>();
+        var table = manager.driver.findElement(By.id("maintable"));
+        List<WebElement> trs = table.findElements(By.tagName("tr"));
+        // первый tr в этой таблице всегда заголовок
+        // если строк меньше 2, значит таблица пуста
+        if (trs.size() < 2) {
+            return contacts;
+        }
+        else {
+            for (int i = 1; i < trs.size(); i++) {
+                WebElement row = trs.get(i);
+                String lastName = row.findElement(By.cssSelector("td:nth-child(2)")).getText();
+                String firstName = row.findElement(By.cssSelector("td:nth-child(3)")).getText();
+                var checkbox = row.findElement(By.name("selected[]"));
+                var id = checkbox.getAttribute("value");
+                contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
+            }
+        }
+        return contacts;
     }
 }
