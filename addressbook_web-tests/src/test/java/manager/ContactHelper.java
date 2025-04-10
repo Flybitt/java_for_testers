@@ -33,6 +33,10 @@ public class ContactHelper extends HelperBase {
         click(By.name("submit"));
     }
 
+    private void submitUpdateContact() {
+        click(By.name("update"));
+    }
+
     private void fillContact(ContactData contact) {
         type(By.name("firstname"), contact.firstName());
         type(By.name("lastname"), contact.lastName());
@@ -58,7 +62,7 @@ public class ContactHelper extends HelperBase {
     }
 
     private void selectContact(ContactData contact) {
-        click(By.cssSelector(String.format("input[value='%s']", contact.id())));
+        click(By.cssSelector(String.format("input[value=\"%s\"]", contact.id())));
     }
 
     public int getCount() {
@@ -100,5 +104,19 @@ public class ContactHelper extends HelperBase {
             }
         }
         return contacts;
+    }
+
+    public void modifyContact(ContactData contact, ContactData modifyContact, int index) {
+        openHomePage();
+        selectContact(contact);
+        initContactModify(index);
+        fillContact(modifyContact);
+        submitUpdateContact();
+        clickTitle();
+    }
+
+    private void initContactModify(int index) {
+        index = index + 2;
+        click(By.cssSelector(String.format("#maintable > tbody > tr:nth-child(%s) > td:nth-child(8) > a > img", index)));
     }
 }

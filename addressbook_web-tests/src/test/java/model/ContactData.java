@@ -22,4 +22,8 @@ public record ContactData(
         return new ContactData(this.id, this.firstName, this.lastName);
     }
 
+    public ContactData withAll() {
+        return new ContactData(this.id, this.firstName, this.lastName);
+    }
+
 }
