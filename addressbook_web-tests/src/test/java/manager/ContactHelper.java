@@ -87,21 +87,14 @@ public class ContactHelper extends HelperBase {
         openHomePage();
         var contacts = new ArrayList<ContactData>();
         var table = manager.driver.findElement(By.id("maintable"));
-        List<WebElement> trs = table.findElements(By.tagName("tr"));
-        // первый tr в этой таблице всегда заголовок
-        // если строк меньше 2, значит таблица пуста
-        if (trs.size() < 2) {
-            return contacts;
-        }
-        else {
-            for (int i = 1; i < trs.size(); i++) {
-                WebElement row = trs.get(i);
-                String lastName = row.findElement(By.cssSelector("td:nth-child(2)")).getText();
-                String firstName = row.findElement(By.cssSelector("td:nth-child(3)")).getText();
-                var checkbox = row.findElement(By.name("selected[]"));
-                var id = checkbox.getAttribute("value");
-                contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
-            }
+        // теперь ищем в таблице все элементы с именем класса = entry
+        List<WebElement> trs = table.findElements(By.name("entry"));
+        for (var tr : trs) {
+            String lastName = tr.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            String firstName = tr.findElement(By.cssSelector("td:nth-child(3)")).getText();
+            var checkbox = tr.findElement(By.name("selected[]"));
+            var id = checkbox.getAttribute("value");
+            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
         }
         return contacts;
     }
