@@ -8,6 +8,7 @@ import model.GroupData;
 import ru.stqa.addressbook.generator.common.Common;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,12 @@ public class Generator {
         if ("json".equals(format)) {
             ObjectMapper mapper = new ObjectMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            mapper.writeValue(new File(ouptut), data);
+            var json = mapper.writeValueAsString(data);
+
+            try (var writer = new FileWriter(ouptut)) {
+                writer.write(json);
+            }
+//            mapper.writeValue(new File(ouptut), data);
         } else {
             throw new IllegalArgumentException("Незвестный формат данных " + format);
         }
