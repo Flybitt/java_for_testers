@@ -4,6 +4,7 @@ import model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import ru.stqa.addressbook.generator.common.Common;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,9 +25,9 @@ public class GroupCreationTests extends TestBase {
         }
         for (int i = 0; i < 5; i++) {
             result.add(new GroupData()
-                    .withName(randomString(i * 10))
-                    .withHeader(randomString(i * 10))
-                    .withFooter(randomString(i * 10)));
+                    .withName(Common.randomString(i * 10))
+                    .withHeader(Common.randomString(i * 10))
+                    .withFooter(Common.randomString(i * 10)));
         }
         return result;
     }
