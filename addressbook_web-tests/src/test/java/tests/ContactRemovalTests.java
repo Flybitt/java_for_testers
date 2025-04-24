@@ -27,7 +27,7 @@ public class ContactRemovalTests extends TestBase {
     @Test
     void canRemoveAllContactsAtOnce() {
         if (app.contacts().getCount() == 0) {
-            app.contacts().createContact(new ContactData("","first name", "last name"));
+            app.contacts().createContact(new ContactData("","first name", "last name", "address", ""));
         }
         app.contacts().remmoveAllContacts();
         var exptectedList = new ArrayList<>();
