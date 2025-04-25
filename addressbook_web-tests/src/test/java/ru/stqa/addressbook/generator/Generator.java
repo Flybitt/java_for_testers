@@ -4,6 +4,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import model.GroupData;
 import ru.stqa.addressbook.generator.common.Common;
 
@@ -49,6 +50,9 @@ public class Generator {
                 writer.write(json);
             }
 //            mapper.writeValue(new File(ouptut), data);
+        } if ("yaml".equals(format)) {
+            ObjectMapper mapper = new YAMLMapper();
+            mapper.writeValue(new File(ouptut), data);
         } else {
             throw new IllegalArgumentException("Незвестный формат данных " + format);
         }
