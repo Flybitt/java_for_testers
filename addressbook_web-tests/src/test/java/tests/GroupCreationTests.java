@@ -35,9 +35,9 @@ public class GroupCreationTests extends TestBase {
 
     public static List<GroupData> singleRandomGroup() {
         return List.of(new GroupData()
-                .withName(Common.randomString(10))
-                .withHeader(Common.randomString(10))
-                .withFooter(Common.randomString(10)));
+                .withName(Common.randomString(10)));
+//                .withHeader(Common.randomString(10))
+//                .withFooter(Common.randomString(10)));
     }
 
     @ParameterizedTest
@@ -55,9 +55,11 @@ public class GroupCreationTests extends TestBase {
         var expectedList = new ArrayList<>(oldGroups);
         expectedList.add(group.withId(maxId));
         expectedList.sort(compareById);
-        Assertions.assertEquals(newGroups, expectedList);
+        Assertions.assertEquals(expectedList, newGroups);
 
         var newUiGroups = app.groups().getList();
+        newUiGroups.sort(compareById);
+        Assertions.assertEquals(newGroups, newUiGroups);
     }
 
 
