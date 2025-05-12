@@ -48,7 +48,7 @@ public class Generator {
                 writer.write(json);
             }
         }else {
-            throw new IllegalArgumentException("Незвестный формат данных " + format);
+            throw new IllegalArgumentException("Неизвестный формат данных " + format);
         }
 
     }
