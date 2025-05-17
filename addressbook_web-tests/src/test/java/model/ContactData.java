@@ -1,35 +1,64 @@
 package model;
 
-import org.checkerframework.checker.units.qual.C;
-
 public record ContactData(
         String id,
         String firstName,
+        String middleName,
         String lastName,
+        String nickName,
+        String company,
         String address,
-        String photo) {
+        String mobile,
+        String work,
+        String photo
+) {
 
     public ContactData() {
-        this("", "", "", "", "");
-    }
-    public ContactData withId(String id) {
-        return new ContactData(id, this.firstName, this.lastName, this.address, this.photo);
-    }
-
-    public ContactData withFirstName(String firstName) {
-        return new ContactData(this.id, firstName, this.lastName, this.address, this.photo);
-    }
-
-    public ContactData withLastName(String lastName) {
-        return new ContactData(this.id, this.firstName, this.lastName, this.address, this.photo);
+        this("", "", "", "", "", "", "", "", "", "");
     }
 
     public ContactData withAll() {
-        return new ContactData(this.id, this.firstName, this.lastName, this.address, this.address);
+        return new ContactData(this.id, this.firstName, this.middleName, this.lastName, this.nickName, this.company, this.address, this.mobile, this.work, this.photo);
+    }
+
+    public ContactData withId(String id) {
+        return new ContactData(id, this.firstName, this.middleName, this.lastName, this.nickName, this.company, this.address, this.mobile, this.work, this.photo);
+    }
+
+    public ContactData withFirstName(String firstName) {
+        return new ContactData(this.id, firstName, this.middleName, this.lastName, this.nickName, this.company, this.address, this.mobile, this.work, this.photo);
+    }
+
+    public ContactData withMiddleName(String middleName) {
+        return new ContactData(this.id, this.firstName, middleName, this.lastName, this.nickName, this.company, this.address, this.mobile, this.work, this.photo);
+    }
+
+    public ContactData withLastName(String lastName) {
+        return new ContactData(this.id, this.firstName, this.middleName, lastName, this.nickName, this.company, this.address, this.mobile, this.work, this.photo);
+    }
+
+    public ContactData withNickName(String nickName) {
+        return new ContactData(this.id, this.firstName, this.middleName, this.lastName, nickName, this.company, this.address, this.mobile, this.work, this.photo);
+    }
+
+    public ContactData withCompany(String company) {
+        return new ContactData(this.id, this.firstName, this.middleName, this.lastName, this.nickName, company, this.address, this.mobile, this.work, this.photo);
+    }
+
+    public ContactData withAddress(String address) {
+        return new ContactData(this.id, this.firstName, this.middleName, this.lastName, this.nickName, this.company, address, this.mobile, this.work, this.photo);
+    }
+
+    public ContactData withMobile(String mobile) {
+        return new ContactData(this.id, this.firstName, this.middleName, this.lastName, this.nickName, this.company, this.address, mobile, this.work, this.photo);
+    }
+
+    public ContactData withWork(String work) {
+        return new ContactData(this.id, this.firstName, this.middleName, this.lastName, this.nickName, this.company, this.address, this.mobile, work, this.photo);
     }
 
     public ContactData withPhoto(String photo) {
-        return new ContactData(this.id, this.firstName, this.lastName, this.address, photo);
+        return new ContactData(this.id, this.firstName, this.middleName, this.lastName, this.nickName, this.company, this.address, this.mobile, this.work, photo);
     }
 
 }

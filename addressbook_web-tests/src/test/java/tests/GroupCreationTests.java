@@ -35,17 +35,15 @@ public class GroupCreationTests extends TestBase {
 
     public static List<GroupData> singleRandomGroup() {
         return List.of(new GroupData()
-                .withName(Common.randomString(10)));
-//                .withHeader(Common.randomString(10))
-//                .withFooter(Common.randomString(10)));
+                .withName(Common.randomString(10)).withHeader(Common.randomString(10)).withFooter(Common.randomString(10)));
     }
 
     @ParameterizedTest
     @MethodSource("singleRandomGroup")
     public void canCreateGroup(GroupData group) throws InterruptedException {
-        var oldGroups = app.jdbc().getGroupList();
+        var oldGroups = app.hbm().getGroupList();
         app.groups().createGroup(group);
-        var newGroups = app.jdbc().getGroupList();
+        var newGroups = app.hbm().getGroupList();
         Comparator<GroupData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
@@ -57,7 +55,7 @@ public class GroupCreationTests extends TestBase {
         expectedList.sort(compareById);
         Assertions.assertEquals(expectedList, newGroups);
 
-        var newUiGroups = app.groups().getList();
+        var newUiGroups = app.hbm().getGroupList();
         newUiGroups.sort(compareById);
         Assertions.assertEquals(newGroups, newUiGroups);
     }
@@ -66,9 +64,9 @@ public class GroupCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("negativeGroupProvider")
     public void cannotCreateMultipleGroups(GroupData group) {
-        var oldGroups = app.groups().getList();
+        var oldGroups = app.hbm().getGroupList();
         app.groups().createGroup(group);
-        var newGroups = app.groups().getList();
+        var newGroups = app.hbm().getGroupList();
         Assertions.assertEquals(newGroups, oldGroups);
     }
 }

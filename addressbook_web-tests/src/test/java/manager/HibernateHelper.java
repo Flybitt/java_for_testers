@@ -1,6 +1,8 @@
 package manager;
 
+import manager.hbm.ContactRecord;
 import manager.hbm.GroupRecord;
+import model.ContactData;
 import model.GroupData;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
@@ -18,14 +20,23 @@ public class HibernateHelper extends HelperBase {
 
         sessionFactory = new Configuration()
                 .addAnnotatedClass(GroupRecord.class)
-                .setProperty(AvailableSettings.URL, "jdbc:mysql://localhost/addressbook")
+                .addAnnotatedClass(ContactRecord.class)
+                .setProperty(AvailableSettings.URL, "jdbc:mysql://localhost/addressbook?zeroDateTimeBehavior=convertToNull")
                 .setProperty(AvailableSettings.USER, "root")
                 .setProperty(AvailableSettings.PASS, "")
                 .buildSessionFactory();
     }
 
-    static List<GroupData> convertList(List<GroupRecord> records) {
+    static List<GroupData> convertGroupList(List<GroupRecord> records) {
         List<GroupData> res = new ArrayList<>();
+        for (var record : records) {
+            res.add(convert(record));
+        }
+        return res;
+    }
+
+    static List<ContactData> convertContactList(List<ContactRecord> records) {
+        List<ContactData> res = new ArrayList<>();
         for (var record : records) {
             res.add(convert(record));
         }
@@ -44,8 +55,20 @@ public class HibernateHelper extends HelperBase {
         return new GroupRecord(Integer.parseInt(id), data.name(), data.header(), data.footer());
     }
 
+    private static ContactRecord convert(ContactData data) {
+        var id = data.id();
+        if ("".equals(id)) {
+            id = "0";
+        }
+        return new ContactRecord(Integer.parseInt(id), data.firstName(), data.middleName(), data.lastName(), data.nickName(), data.company(), data.address(), data.mobile(), data.work());
+    }
+
+    private static ContactData convert(ContactRecord record) {
+        return new ContactData().withId("" + record.id).withFirstName(record.firstName).withLastName(record.lastName).withAddress(record.address);
+    }
+
     public List<GroupData> getGroupList() {
-        return convertList(sessionFactory.fromSession(session -> {
+        return convertGroupList(sessionFactory.fromSession(session -> {
             return session.createQuery("from GroupRecord", GroupRecord.class).list();
         }));
     }
@@ -56,6 +79,12 @@ public class HibernateHelper extends HelperBase {
         });
     }
 
+    public long getContactsCount() {
+        return sessionFactory.fromSession(session -> {
+            return session.createQuery("select count(*) from ContactRecord", Long.class).getSingleResult();
+        });
+    }
+
     public void createGroup(GroupData groupData) {
         sessionFactory.inSession(session -> {
             session.getTransaction().begin();
@@ -63,4 +92,30 @@ public class HibernateHelper extends HelperBase {
             session.getTransaction().commit();
         });
     }
+
+    public List<ContactData> getContactsInGroup(GroupData group) {
+        return sessionFactory.fromSession(session -> {
+            return convertContactList(session.get(GroupRecord.class, group.id()).contacts);
+        });
+    }
+
+    public void createContact(ContactData contactData) {
+        sessionFactory.inSession(session -> {
+            session.getTransaction().begin();
+            session.persist(convert(contactData));
+            session.getTransaction().commit();
+        });
+    }
+
+    public List<ContactData> getContactList() {
+        return convertContactList(sessionFactory.fromSession(session -> {
+            return session.createQuery("from ContactRecord", ContactRecord.class).list();
+        }));
+    }
+
+//    public ContactData getContactById(int id) {
+//        return convert((ContactRecord) sessionFactory.fromSession(session -> {
+//            return session.createQuery(String.format("select id, firstname, middlename, lastname, nickname, company, address, mobile, work from ContactRecord where id = %s", id), ContactRecord.class).getSingleResult();
+//        }));
+//    }
 }

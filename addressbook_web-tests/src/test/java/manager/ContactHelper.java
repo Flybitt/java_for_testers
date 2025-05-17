@@ -1,8 +1,10 @@
 package manager;
 
 import model.ContactData;
+import model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,18 @@ public class ContactHelper extends HelperBase {
         fillContact(contact);
         submitContactCreation();
         clickTitle();
+    }
+
+    public void createContact(ContactData contact, GroupData group) {
+        openContactPage();
+        fillContact(contact);
+        selectGroup(group);
+        submitContactCreation();
+        clickTitle();
+    }
+
+    private void selectGroup(GroupData group) {
+        new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
     }
 
     // почему-то иногда не срабатывает и вылетает на stale element reference: stale element not found
@@ -39,8 +53,13 @@ public class ContactHelper extends HelperBase {
 
     private void fillContact(ContactData contact) {
         type(By.name("firstname"), contact.firstName());
+        type(By.name("middlename"), contact.middleName());
         type(By.name("lastname"), contact.lastName());
-        attach(By.name("photo"), contact.photo());
+        type(By.name("nickname"), contact.nickName());
+        type(By.name("company"), contact.company());
+        type(By.name("address"), contact.address());
+        type(By.name("mobile"), contact.mobile());
+        type(By.name("work"), contact.work());
     }
 
     private void openContactPage() {
@@ -112,5 +131,9 @@ public class ContactHelper extends HelperBase {
     private void initContactModify(int index) {
         index = index + 2;
         click(By.cssSelector(String.format("#maintable > tbody > tr:nth-child(%s) > td:nth-child(8) > a > img", index)));
+    }
+
+    private void refreshPage() {
+        manager.driver.navigate().refresh();
     }
 }
