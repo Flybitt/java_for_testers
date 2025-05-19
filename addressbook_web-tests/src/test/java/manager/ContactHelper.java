@@ -25,13 +25,17 @@ public class ContactHelper extends HelperBase {
     public void createContact(ContactData contact, GroupData group) {
         openContactPage();
         fillContact(contact);
-        selectGroup(group);
+        selectGroupInCreateContact(group);
         submitContactCreation();
         clickTitle();
     }
 
-    private void selectGroup(GroupData group) {
+    private void selectGroupInCreateContact(GroupData group) {
         new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
+    }
+
+    private void selectGroup(GroupData group) {
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
     }
 
     // почему-то иногда не срабатывает и вылетает на stale element reference: stale element not found
@@ -137,4 +141,21 @@ public class ContactHelper extends HelperBase {
     private void refreshPage() {
         manager.driver.navigate().refresh();
     }
+
+    public void deleteContactFromGroup(ContactData contact, GroupData group) {
+        removeContactFromGroup(contact, group);
+    }
+
+    public void removeContactFromGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        selectGroup(group);
+        selectContact(contact);
+        clickRemoveContactFromGroup();
+        openHomePage();
+    }
+
+    private void clickRemoveContactFromGroup() {
+        manager.driver.findElement(By.name("remove")).click();
+    }
+
 }

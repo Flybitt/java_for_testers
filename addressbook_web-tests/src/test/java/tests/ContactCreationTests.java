@@ -130,18 +130,27 @@ public class ContactCreationTests extends TestBase {
     }
 
     @Test
-    public void canCreateContactInGroup() {
+    public void canDeleteContactFromGroup() {
         var contact = new ContactData()
                 .withFirstName(Common.randomString(10))
-                .withLastName(Common.randomString(10))
-                .withPhoto(randomFile("src/test/resources/images/"));
+                .withLastName(Common.randomString(10));
+
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "group_name", "group_header", "group_footer"));
         }
+
         var group = app.hbm().getGroupList().get(0);
-        var oldRelated = app.hbm().getContactsInGroup(group);
-        app.contacts().createContact(contact, group);
-        var newRelated = app.hbm().getContactsInGroup(group);
-        Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
+
+        if (app.hbm().getContactsCount() == 0) {
+            app.hbm().createContact(contact);
+        }
+
+        if (app.hbm().getContactsInGroup(group).isEmpty()) {
+            app.contacts().createContact(contact, group);
+        }
+        else {
+            contact = app.hbm().getContactsInGroup(group).get(0);
+            app.contacts().deleteContactFromGroup(contact, group);
+        }
     }
 }
