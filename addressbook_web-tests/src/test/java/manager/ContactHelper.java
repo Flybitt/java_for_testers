@@ -124,6 +124,7 @@ public class ContactHelper extends HelperBase {
         selectContact(contact);
         initContactModify(index);
         fillContact(modifyContact);
+        refreshPage();
         submitUpdateContact();
         clickTitle();
     }
