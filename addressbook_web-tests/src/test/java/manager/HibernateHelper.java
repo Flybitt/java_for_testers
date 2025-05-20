@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,11 +52,19 @@ public class HibernateHelper extends HelperBase {
         if ("".equals(id)) {
             id = "0";
         }
-        return new ContactRecord(Integer.parseInt(id), data.firstName(), data.middleName(), data.lastName(), data.nickName(), data.company(), data.address(), data.mobile(), data.work());
+        return new ContactRecord(Integer.parseInt(id), data.firstName(), data.middleName(), data.lastName(), data.nickName(), data.company(), data.address(), data.mobile(), data.work(), data.home(), data.secondary());
     }
 
     private static ContactData convert(ContactRecord record) {
-        return new ContactData().withId("" + record.id).withFirstName(record.firstName).withLastName(record.lastName).withAddress(record.address);
+        return new ContactData()
+                .withId("" + record.id)
+                .withFirstName(record.firstName)
+                .withLastName(record.lastName)
+                .withAddress(record.address)
+                .withHome(record.home)
+                .withMobile(record.mobile)
+                .withWork(record.work)
+                .withSecondary(record.phone2);
     }
 
     public List<GroupData> getGroupList() {
