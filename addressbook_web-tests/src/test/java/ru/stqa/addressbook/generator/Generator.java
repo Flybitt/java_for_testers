@@ -4,13 +4,15 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import model.ContactData;
 import model.GroupData;
 import ru.stqa.addressbook.generator.common.Common;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Generator {
 
@@ -63,18 +65,20 @@ public class Generator {
         }
     }
 
+    private Object generateData(Supplier<Object> dataSupplier) {
+        return Stream.generate(dataSupplier).limit(count).collect(Collectors.toList());
+    }
+
     private Object generateGroups() {
-        var result = new ArrayList<GroupData>(List.of());
-        for (int i = 0; i < count; i++) {
-            result.add(new GroupData()
-                    .withName(Common.randomString(i * 10))
-                    .withHeader(Common.randomString(i * 10))
-                    .withFooter(Common.randomString(i * 10)));
-        }
-        return result;
+        return generateData(() -> new GroupData()
+                .withName(Common.randomString(10))
+                .withHeader(Common.randomString(10))
+                .withFooter(Common.randomString(10)));
     }
 
     private Object generateContacts() {
-        return null;
+        return generateData(() -> new ContactData()
+                .withFirstName(Common.randomString(10))
+                .withLastName(Common.randomString(10)));
     }
 }
