@@ -130,21 +130,39 @@ public class ContactCreationTests extends TestBase {
     }
 
     @Test
+    public void canAddExistContactInGroup() {
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "group_name", "group_header", "group_footer"));
+        }
+        GroupData group = app.hbm().getGroupList().get(0);
+        var oldRelated = app.hbm().getContactsInGroup(group);
+        List<ContactData> AllContactsWithoutGroup = app.hbm().getContactsWithoutGroup();
+        ContactData contactWithoutGroup;
+        if (!AllContactsWithoutGroup.isEmpty()) {
+            contactWithoutGroup = AllContactsWithoutGroup.get(0);
+        }
+        else {
+            app.contacts().createContact(new ContactData().withFirstName(Common.randomString(5)).withLastName(Common.randomString(5)));
+            contactWithoutGroup = app.hbm().getContactList().get(0);
+        }
+        app.contacts().addContactToGroup(contactWithoutGroup, group);
+
+        var newRelated = app.hbm().getContactsInGroup(group);
+        Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
+    }
+
+    @Test
     public void canDeleteContactFromGroup() {
         var contact = new ContactData()
                 .withFirstName(Common.randomString(10))
                 .withLastName(Common.randomString(10));
-
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "group_name", "group_header", "group_footer"));
         }
-
         var group = app.hbm().getGroupList().get(0);
-
         if (app.hbm().getContactsCount() == 0) {
             app.hbm().createContact(contact);
         }
-
         if (app.hbm().getContactsInGroup(group).isEmpty()) {
             app.contacts().createContact(contact, group);
         }

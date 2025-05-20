@@ -113,6 +113,12 @@ public class HibernateHelper extends HelperBase {
         }));
     }
 
+    public List<ContactData> getContactsWithoutGroup() {
+        return convertContactList(sessionFactory.fromSession(session -> {
+            return session.createQuery("FROM ContactRecord cr WHERE NOT EXISTS " + "(SELECT 1 FROM GroupRecord gr JOIN gr.contacts gc WHERE gc.id = cr.id)", ContactRecord.class).list();
+        }));
+    }
+
 //    public ContactData getContactById(int id) {
 //        return convert((ContactRecord) sessionFactory.fromSession(session -> {
 //            return session.createQuery(String.format("select id, firstname, middlename, lastname, nickname, company, address, mobile, work from ContactRecord where id = %s", id), ContactRecord.class).getSingleResult();

@@ -16,14 +16,14 @@ public class ContactHelper extends HelperBase {
     }
 
     public void createContact(ContactData contact) {
-        openContactPage();
+        openContactCreationPage();
         fillContact(contact);
         submitContactCreation();
         clickTitle();
     }
 
     public void createContact(ContactData contact, GroupData group) {
-        openContactPage();
+        openContactCreationPage();
         fillContact(contact);
         selectGroupInCreateContact(group);
         submitContactCreation();
@@ -66,7 +66,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("work"), contact.work());
     }
 
-    private void openContactPage() {
+    private void openContactCreationPage() {
         manager.driver.findElement(By.xpath("//a[contains(text(), 'add new')]")).click();
     }
 
@@ -156,6 +156,22 @@ public class ContactHelper extends HelperBase {
 
     private void clickRemoveContactFromGroup() {
         manager.driver.findElement(By.name("remove")).click();
+    }
+
+    public void addContactToGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        selectContact(contact);
+        List<WebElement> selectOptions = manager.driver.findElements(By.cssSelector("#content > form:nth-child(10) > div.right > select > option"));
+        for (WebElement option : selectOptions) {
+            System.out.println(option);
+            if (option.getText().equals(group.name())) {
+                manager.driver.findElement(By.name("add")).click();
+                break;
+            }
+            else {
+                throw new RuntimeException("Группа не найдена в списке на добавление");
+            }
+        }
     }
 
     public String getPhones(ContactData contact) {
