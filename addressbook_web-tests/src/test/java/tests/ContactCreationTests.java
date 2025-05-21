@@ -143,7 +143,7 @@ public class ContactCreationTests extends TestBase {
         }
         else {
             app.contacts().createContact(new ContactData().withFirstName(Common.randomString(5)).withLastName(Common.randomString(5)));
-            contactWithoutGroup = app.hbm().getContactList().get(0);
+            contactWithoutGroup = app.hbm().getContactsWithoutGroup().get(0);
         }
         app.contacts().addContactToGroup(contactWithoutGroup, group);
 
