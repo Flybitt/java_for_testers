@@ -61,7 +61,7 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> negativeContactProvider() {
         return new ArrayList<ContactData>(List.of(
-                new ContactData("", "first name'", "", "", "", "", "", "", "", "", "", "")));
+                new ContactData("", "first name'", "", "", "", "", "", "", "", "", "", "", "", "", "", "")));
     }
 
     @ParameterizedTest

@@ -6,8 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ContactHelper extends HelperBase {
 
@@ -116,9 +115,11 @@ public class ContactHelper extends HelperBase {
         for (var tr : trs) {
             String lastName = tr.findElement(By.cssSelector("td:nth-child(2)")).getText();
             String firstName = tr.findElement(By.cssSelector("td:nth-child(3)")).getText();
+            String address = tr.findElement(By.cssSelector("td:nth-child(4)")).getText();
+            String emails = tr.findElement(By.cssSelector("td:nth-child(5)")).getText();
             var checkbox = tr.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
-            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
+            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address).withEmail(emails));
         }
         return contacts;
     }
@@ -176,5 +177,39 @@ public class ContactHelper extends HelperBase {
 
     public String getPhones(ContactData contact) {
         return manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../../td[6]", contact.id()))).getText();
+    }
+
+    public String getContactPhones(ContactData contact) {
+        String phones = null;
+        List<WebElement> rows = manager.driver.findElements(By.name("entry"));
+        for (WebElement row : rows) {
+            if (Objects.equals(row.findElement(By.tagName("input")).getAttribute("id"), contact.id())) {
+                phones = row.findElements(By.tagName("td")).get(5).getText();
+            }
+        }
+        return phones;
+    }
+
+    public String getContactAddress(ContactData contact) {
+        String address = null;
+        List<WebElement> rows = manager.driver.findElements(By.name("entry"));
+        for (WebElement row : rows) {
+            if (Objects.equals(row.findElement(By.tagName("input")).getAttribute("id"), contact.id())) {
+                address = row.findElements(By.tagName("td")).get(3).getText();
+            }
+        }
+        return address;
+    }
+
+
+    public String getContactEmails(ContactData contact) {
+        String emails = null;
+        List<WebElement> rows = manager.driver.findElements(By.name("entry"));
+        for (WebElement row : rows) {
+            if (Objects.equals(row.findElement(By.tagName("input")).getAttribute("id"), contact.id())) {
+                emails = row.findElements(By.tagName("td")).get(4).getText();
+            }
+        }
+        return emails;
     }
 }
