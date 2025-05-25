@@ -5,6 +5,8 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.seleniumhq.selenium/selenium-devtools-v131/4.28.1/9071645ff0b06bd25bb6aeafa31eeda8e0e524b8/selenium-devtools-v131-4.28.1.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.seleniumhq.selenium/selenium-devtools-v131/4.28.1/a6c496455844019cb9579025fb0e4e91d2052f93/selenium-devtools-v131-4.28.1-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

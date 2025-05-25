@@ -14,7 +14,6 @@ import java.util.List;
 
 public class ContactCreationTests extends TestBase {
 
-
     public static List<ContactData> contactProvider() {
         var result = new ArrayList<ContactData>(List.of());
         for (var firstName : List.of("", "first name")) {

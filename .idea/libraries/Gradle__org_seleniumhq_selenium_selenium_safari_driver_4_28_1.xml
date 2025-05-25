@@ -5,6 +5,8 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.seleniumhq.selenium/selenium-safari-driver/4.28.1/e2af27470b441fb8f46f3b0ef1608cf825b2c996/selenium-safari-driver-4.28.1.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.seleniumhq.selenium/selenium-safari-driver/4.28.1/301f7855cda5894adbc6d0323a4d3e1cc1bdf89e/selenium-safari-driver-4.28.1-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

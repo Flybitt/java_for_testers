@@ -5,6 +5,8 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.seleniumhq.selenium/selenium-firefox-driver/4.28.1/4878025f00379f06fd50c0d4edc493b62c1d8c52/selenium-firefox-driver-4.28.1.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.seleniumhq.selenium/selenium-firefox-driver/4.28.1/24c84671ec1aba0a9567f3db008157c10ad8b965/selenium-firefox-driver-4.28.1-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

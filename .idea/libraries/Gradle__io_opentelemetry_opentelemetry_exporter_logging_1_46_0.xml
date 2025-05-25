@@ -5,6 +5,8 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-exporter-logging/1.46.0/a0ef76a383a086b812395ca5a5cdf94804a59a3f/opentelemetry-exporter-logging-1.46.0.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-exporter-logging/1.46.0/baa7a41a4d30079b5ab55c5b9bf0172409e9e355/opentelemetry-exporter-logging-1.46.0-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
