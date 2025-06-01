@@ -15,6 +15,8 @@ dependencies {
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.28.1'
     testImplementation 'com.squareup.okhttp3:okhttp:4.11.0'
     testImplementation 'com.squareup.okhttp3:okhttp-urlconnection:4.11.0'
+    testImplementation 'org.eclipse.angus:angus-mail:2.0.2'
+    implementation("com.sun.mail:jakarta.mail:2.0.1")
 
 }
 
