@@ -40,7 +40,7 @@ public class UserRegTests extends TestBase {
         else {
             System.out.println("В полученном сообщении, не найдена ссылка");
         }
-        app.userReg().fillUserData(username);
+        app.userReg().fillUserData(username, "password");
         app.userReg().loginUser(username);
         Assertions.assertEquals(app.userReg().loggedUser(), username);
         removeEmail(email);

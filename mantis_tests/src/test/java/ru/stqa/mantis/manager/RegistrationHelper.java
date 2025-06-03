@@ -22,10 +22,10 @@ public class RegistrationHelper extends HelperBase {
         manager.driver().findElement(By.xpath("//fieldset/input[2]")).click();
     }
 
-    public void fillUserData(String realName) {
+    public void fillUserData(String realName, String password) {
         type(By.name("realname"), realName);
-        type(By.name("password"), "password");
-        type(By.name("password_confirm"), "password");
+        type(By.name("password"), password);
+        type(By.name("password_confirm"), password);
         manager.driver().findElement(By.tagName("button")).click();
     }
 
