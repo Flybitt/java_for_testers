@@ -126,10 +126,10 @@ public class ContactHelper extends HelperBase {
 
     public void modifyContact(ContactData contact, ContactData modifyContact, int index) {
         openHomePage();
-        selectContact(contact);
+//        selectContact(contact);
         initContactModify(index);
         fillContact(modifyContact);
-        refreshPage();
+//        refreshPage();
         submitUpdateContact();
         clickTitle();
     }
