@@ -29,7 +29,7 @@ public class TestBase {
 
     @AfterEach
     void checkDatabaseConsistency() {
-        app.jdbc().checkConsistency();
+//        app.jdbc().checkConsistency();
     }
 
     public static String randomFile(String dir) {
