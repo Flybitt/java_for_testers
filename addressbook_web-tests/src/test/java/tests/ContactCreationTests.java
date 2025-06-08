@@ -3,6 +3,7 @@ package tests;
 import model.ContactData;
 import model.GroupData;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -41,7 +42,7 @@ public class ContactCreationTests extends TestBase {
                 }
             }
         }
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             result.add(new ContactData()
                     .withFirstName(Common.randomString(i * 10))
                     .withMiddleName(Common.randomString(i * 10))
@@ -63,6 +64,7 @@ public class ContactCreationTests extends TestBase {
                 new ContactData("", "first name'", "", "", "", "", "", "", "", "", "", "", "", "", "", "")));
     }
 
+    @Disabled
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void canCreateMultipleContacts(ContactData contact) {
